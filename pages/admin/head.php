@@ -6,6 +6,12 @@
 
 <!-- Font Awesome Icons -->
 <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+<!-- DataTables -->
+<link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+<!-- iCheck for checkboxes and radio inputs -->
+<link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+<!-- Toastr -->
+  <link rel="stylesheet" href="../../plugins/toastr/toastr.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="../../dist/css/adminlte.css">
 <!-- Google Font: Source Sans Pro -->
