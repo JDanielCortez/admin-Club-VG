@@ -26,14 +26,17 @@
 <script>
     var mensajeVacios = "";
     $(function () {
-        $("#example1").DataTable();
+        $("#example1").DataTable({
+            "ordering": false,
+            "autoWidth": false,
+        });
         $('#example2').DataTable({
         "paging": false,
         "lengthChange": false,
         "searching": false,
         "ordering": false,
         "info": false,
-        "autoWidth": false,
+        "autoWidth": true,
         });
     });
 
@@ -48,8 +51,6 @@
         document.getElementById(id).className = "form-control is-valid";
         }
     }
-
-  
 
     function validarCorreo(id){
         console.log(document.getElementById(id).value);
@@ -87,11 +88,14 @@
         return true;
     }
 
-    function validarCampos(form){
+    function validarCampos(form, action){
         var myform = document.getElementById(form);
         //console.log(myform.elements)
         for(var i=0; i < myform.elements.length; i++){
-            if(myform.elements[i].value == ''){
+            if(action == 'update' && myform.elements[i].type == 'file'){
+
+            }
+            else if(myform.elements[i].value == ''){
                 mensajeVacios += "El campo " + myform.elements[i].name + " es requerido. \n";   
                 toastr.error("El campo " + myform.elements[i].name + " es requerido.");  
             }

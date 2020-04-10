@@ -48,7 +48,50 @@
         print_r(json_encode($stmt->fetchAll()));
         
     }elseif($_GET['action']=='update'){
-        echo "Si acciones";
+
+        $id_usuario = $_POST['id_usuario'];;
+        $nombre = $_POST['Nombre'];
+        $paterno = $_POST['Apellido_paterno'];
+        $materno = $_POST['Apellido_materno'];
+        $nacimiento = $_POST['Nacimiento'];
+        $genero = $_POST['Genero'];
+        $telefono = $_POST['Telefono'];
+        $usuario = $_POST['Nombre_de_usuario'];
+        $contrasena = $_POST['Contraseña'];
+        $correo = $_POST['Correo_electronico'];
+
+        if($_FILES['Foto_de_perfil']['tmp_name'] != ''){
+            $foto = '../../dist/img/users_img/'.$nombre.$paterno.$materno.'.jpg';
+            move_uploaded_file($_FILES['Foto_de_perfil']['tmp_name'], $foto);
+
+            $sql = "UPDATE usuarios SET nombre_usuario = :nombre_usuario, contrasena = :contrasena, nombre = :nombre, paterno = :paterno, materno = :materno, fecha_nacimiento = :nacimiento, genero = :genero, telefono = :telefono, correo = :correo, foto = :foto  WHERE id_usuario = :id_usuario";
+        }else{
+            $sql = "UPDATE usuarios SET nombre_usuario = :nombre_usuario, contrasena = :contrasena, nombre = :nombre, paterno = :paterno, materno = :materno, fecha_nacimiento = :nacimiento, genero = :genero, telefono = :telefono, correo = :correo  WHERE id_usuario = :id_usuario";
+        }
+
+        $stmt = Conexion::conectar()->prepare($sql);
+
+        $stmt->bindParam(":id_usuario", $id_usuario, PDO::PARAM_INT);
+        $stmt->bindParam(":nombre_usuario", $usuario, PDO::PARAM_STR);
+        $stmt->bindParam(":contrasena", $contrasena, PDO::PARAM_STR);
+        $stmt->bindParam(":nombre", $nombre, PDO::PARAM_STR);
+        $stmt->bindParam(":paterno", $paterno, PDO::PARAM_STR);
+        $stmt->bindParam(":materno", $materno, PDO::PARAM_STR);
+        $stmt->bindParam(":nacimiento", $nacimiento, PDO::PARAM_STR);
+        $stmt->bindParam(":genero", $genero, PDO::PARAM_STR);
+        $stmt->bindParam(":telefono", $telefono, PDO::PARAM_STR);
+        $stmt->bindParam(":correo", $correo, PDO::PARAM_STR);
+
+
+        if($_FILES['Foto_de_perfil']['tmp_name'] != ''){
+            $stmt->bindParam(":foto", $foto, PDO::PARAM_STR);
+        }
+
+        if($stmt->execute()){
+            echo "success";
+        } else{
+            echo "error";
+        }
     }elseif($_GET['action']=='delete'){
         $stmt = Conexion::conectar()->prepare("UPDATE usuarios SET estado = :estado  WHERE id_usuario = :id_usuario");
 
