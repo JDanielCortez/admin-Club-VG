@@ -76,7 +76,7 @@ function actualizar() {
             },
             success: function (response) {
                 if (response != 'error') {
-                    var index = datos.findIndex(obj => obj.id_juego == document.getElementById('id_moneda').value);
+                    var index = datos.findIndex(obj => obj.id_moneda == document.getElementById('id_moneda').value);
                     //console.log(response);
                     datos[index] = {};
                     datos[index] = JSON.parse(response);
