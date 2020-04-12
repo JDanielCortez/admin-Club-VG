@@ -13,10 +13,11 @@ if ($_GET['action'] == 'iniciar') {
         $usuario = $stmt->fetch();
         if ($usuario['contrasena'] == $pass) {
             session_start();
-            $_SESSION["validar"] = 'validar';
+            $_SESSION["validar"] = true;
             $_SESSION["usuario"] = $usuario['nombre_usuario'];
             $_SESSION["nivel"] = $usuario['nombre_tipo_usuario'];
             //header("Location: ../admin/dashboard.php");
+            print_r($_SESSION);
         } else {
             echo "incorrectos";
         }
@@ -24,10 +25,10 @@ if ($_GET['action'] == 'iniciar') {
         echo "error";
     }
 }else{
-    $_SESSION['validar'] = '';
+    session_start();
+    $_SESSION['validar'] = false;
     $_SESSION["usuario"] = '';
     $_SESSION["nivel"] = '';
-    $_SESSION = null;
     session_destroy();
 }
 ?>

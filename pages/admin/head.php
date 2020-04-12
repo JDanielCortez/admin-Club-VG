@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['validar'])) {
+if (!isset($_SESSION['validar']) || !$_SESSION['validar']) {
     header("location: ../../login.php");
     exit();
 }

@@ -11,7 +11,7 @@
 
   <ul class="navbar-nav ml-auto">
     <li class="nav-item dropdown">
-      <a class="nav-link" data-toggle="dropdown" onclick="cerrarSesion()">
+      <a class="nav-link" data-toggle="dropdown" href="#" onclick="cerrarSesion()">
         <i class="fas fa-sign-out-alt"></i>
       </a>
     </li>
