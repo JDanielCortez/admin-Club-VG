@@ -120,3 +120,4 @@
         }
     }
 </script>
+<script src="../controller/login.js" type="text/javascript"></script>
