@@ -141,7 +141,7 @@ function actualizarTabla() {
 }
 
 function redireccionar(id_torneo) {
-    window.location.href = "torneo.php?torneo=" + id_torneo;
+    window.location.href = "ver_torneo.php?torneo=" + id_torneo;
 }
 
 function prepararRegistro() {
