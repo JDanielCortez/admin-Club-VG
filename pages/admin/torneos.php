@@ -107,6 +107,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <div class="col-md-12">
                 <div class="row">
 
+                  <input type="hidden" id="id_torneo" name="id_torneo" value="0">
+                  
                   <div class="col-md-4">
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">

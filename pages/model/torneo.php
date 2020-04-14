@@ -29,35 +29,23 @@ if ($_GET['action'] == 'create') {
 
     print_r(json_encode($stmt->fetchAll()));
 } elseif ($_GET['action'] == 'update') {
+    //print_r($_POST);
 
-    $id_juego = $_POST['id_juego'];
-    $id_consola = $_POST['Consola'];
-    $titulo = $_POST['Titulo'];
+    $stmt = Conexion::conectar()->prepare("UPDATE torneos SET titulo = :titulo, id_juego = :id_juego, id_modalidad = :id_modalidad, id_estatus = :id_estatus, fecha = :fecha, hora = :hora, max_jugadores = :max_jugadores, descripcion = :descripcion WHERE id_torneo = :id_torneo");
 
-    if ($_FILES['Imagen']['tmp_name'] != '') {
-        $foto = '../../dist/img/juegos_img/' . $titulo . '.jpg';
-        move_uploaded_file($_FILES['Imagen']['tmp_name'], $foto);
-        $sql = "UPDATE juegos SET titulo = :titulo, imagen = :imagen WHERE id_juego = :id_juego";
-    } else {
-        $sql = "UPDATE juegos SET titulo = :titulo WHERE id_juego = :id_juego";
-    }
-
-    $stmt = Conexion::conectar()->prepare($sql);
-
-    $stmt->bindParam(":id_juego", $id_juego, PDO::PARAM_INT);
-    $stmt->bindParam(":titulo", $titulo, PDO::PARAM_STR);
-    if ($_FILES['Imagen']['tmp_name'] != '') {
-        $stmt->bindParam(":imagen", $foto, PDO::PARAM_STR);
-    }
+    $stmt->bindParam(":id_torneo", $_POST['id_torneo'], PDO::PARAM_INT);
+    $stmt->bindParam(":titulo", $_POST['Titulo'], PDO::PARAM_STR);
+    $stmt->bindParam(":id_juego", $_POST['Juego'], PDO::PARAM_INT);
+    $stmt->bindParam(":id_modalidad", $_POST['Modalidad'], PDO::PARAM_INT);
+    $stmt->bindParam(":id_estatus", $_POST['Estatus'], PDO::PARAM_INT);
+    $stmt->bindParam(":fecha", $_POST['Fecha'], PDO::PARAM_STR);
+    $stmt->bindParam(":hora", $_POST['Hora'], PDO::PARAM_STR);
+    $stmt->bindParam(":max_jugadores", $_POST['Jugadores'], PDO::PARAM_STR);
+    $stmt->bindParam(":descripcion", $_POST['Descripcion'], PDO::PARAM_STR);
 
     if ($stmt->execute()) {
-        $jc = Conexion::conectar()->prepare("UPDATE consola_juego SET id_consola = :id_consola WHERE id_juego = :id_juego");
-        $jc->bindParam(":id_juego", $id_juego, PDO::PARAM_INT);
-        $jc->bindParam(":id_consola", $id_consola, PDO::PARAM_INT);
-        $jc->execute();
-
-        $modificado = Conexion::conectar()->prepare("SELECT * FROM juegos_view WHERE id_juego = :id_juego");
-        $modificado->bindParam(":id_juego", $id_juego, PDO::PARAM_INT);
+        $modificado = Conexion::conectar()->prepare("SELECT * FROM torneos_view WHERE id_torneo = :id_torneo");
+        $modificado->bindParam(":id_torneo", $_POST['id_torneo'], PDO::PARAM_INT);
         $modificado->execute();
 
         print_r(json_encode($modificado->fetch()));

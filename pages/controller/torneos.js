@@ -184,6 +184,65 @@ function guardar() {
     }
 }
 
+function prepararActualizacion(id_torneo) {
+
+    var myform = document.getElementById('form');
+    document.getElementById("btn-gamer").onclick = actualizar;
+    document.getElementById("titulo").innerHTML = "Modificar torneo";
+
+    myform.reset();
+    //console.log("modificando gamer");
+
+    var index = datos.findIndex(obj => obj.id_torneo == id_torneo);
+
+
+    document.getElementById("id_torneo").value = datos[index].id_torneo;
+    document.getElementById("titulo_torneo").value = datos[index].titulo;
+    $('#juego').val(datos[index].id_juego).trigger('change');
+    $('#modalidad').val(datos[index].id_modalidad).trigger('change');
+    $('#estatus').val(datos[index].id_modalidad).trigger('change');
+    document.getElementById("fecha").value = datos[index].fecha;
+    document.getElementById("hora").value = datos[index].hora;
+    document.getElementById("jugadores").value = datos[index].max_jugadores;
+    document.getElementById("descripcion").value = datos[index].descripcion;
+
+    // for (var i = 0; i < myform.elements.length; i++) {
+    //     vacio(myform.elements[i].id);
+    // }
+}
+
+function actualizar() {
+    if (validarCampos('form', 'update')) {
+        var parametros = new FormData($('#form')[0]);
+        $.ajax({
+            data: parametros,
+            url: '../model/torneo.php?action=update',
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            beforeSend: function () {
+                $('#modal-lg').modal('hide');
+            },
+            success: function (response) {
+                //console.log(response);
+                if (response != 'error') {
+                    //console.log(response);
+                    var index = datos.findIndex(obj => obj.id_torneo == document.getElementById('id_torneo').value);
+
+                    datos[index] = {};
+                    datos[index] = JSON.parse(response);
+                    actualizarTabla();
+
+                    toastr.success("Torneo actualizado exitosamente.");
+                } else {
+                    console.log(response);
+                    toastr.error("No se ha actualizado.");
+                }
+            }
+        });
+    }
+}
+
 function eliminar(id_torneo) {
     var estadoLocal = 0;
     var index = datos.findIndex(obj => obj.id_torneo == id_torneo)
