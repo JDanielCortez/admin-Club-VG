@@ -120,6 +120,12 @@ function actualizarTabla() {
     var tabla = $('#example1').DataTable();
     tabla.clear();
     for (dato of datos) {
+        $estado = "<span class='badge badge-success'>Activo</span>";
+        if (dato.estado == 1) {
+            $estado = "<span class='badge badge-success'>Activo</span>";
+        } else {
+            $estado = "<span class='badge badge-danger'>Inactivo</span>";
+        }
         tabla.row.add([
             dato.titulo,
             dato.juego,
@@ -127,7 +133,8 @@ function actualizarTabla() {
             dato.nombre_estatus,
             dato.max_jugadores,
             dato.fecha + ' ' + dato.hora,
-            "<div class='btn-group'> <button type='button' class='btn btn-info'  onclick='redireccionar(" + dato.id_torneo + ")'><i class='fas fa-eye'></i></button></i></button> </div>"
+            $estado,
+            "<div class='btn-group'><div class='btn-group'> <button type='button' class='btn btn-info'  onclick='redireccionar(" + dato.id_torneo + ")'><i class='fas fa-eye'></i></button></i></button> </div> <button type='button' class='btn btn-warning'  onclick='prepararActualizacion(" + dato.id_torneo + ")' data-toggle='modal' data-target='#modal-lg'><i class='fas fa-edit'></i></button> <button type='button' class='btn btn-danger' onclick='eliminar(" + dato.id_torneo + ")'><i class='fas fa-trash'></i></button> </div>"
 
         ]).draw(false);
     }
@@ -175,4 +182,38 @@ function guardar() {
             }
         });
     }
+}
+
+function eliminar(id_torneo) {
+    var estadoLocal = 0;
+    var index = datos.findIndex(obj => obj.id_torneo == id_torneo)
+    var estado_actual = datos[index].estado;
+
+    if (estado_actual == 0) {
+        estadoLocal = 1;
+    } else {
+        estadoLocal = 0;
+    }
+
+    $.ajax({
+        data: '',
+        url: '../model/torneo.php?action=delete&id_torneo=' + id_torneo + '&estado=' + estadoLocal,
+        type: 'GET',
+        contentType: false,
+        processData: false,
+        beforeSend: function () {
+            // $('#modal-sm').modal('toggle');
+        },
+        success: function (response) {
+            // $('#modal-sm').modal("toggle");
+            if (response == "success") {
+                toastr.success("Estado actualizado exitosamente.");
+                datos[index].estado = estadoLocal;
+                actualizarTabla();
+            } else {
+                toastr.error("No ha sido posible actualizar el estado.");
+            }
+
+        }
+    });
 }

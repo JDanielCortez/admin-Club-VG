@@ -65,9 +65,9 @@ if ($_GET['action'] == 'create') {
         echo "error";
     }
 } elseif ($_GET['action'] == 'delete') {
-    $stmt = Conexion::conectar()->prepare("UPDATE juegos SET estado = :estado  WHERE id_juego = :id_juego");
+    $stmt = Conexion::conectar()->prepare("UPDATE torneos SET estado = :estado  WHERE id_torneo = :id_torneo");
 
-    $stmt->bindParam(":id_juego", $_GET["id_juego"], PDO::PARAM_INT);
+    $stmt->bindParam(":id_torneo", $_GET["id_torneo"], PDO::PARAM_INT);
     $stmt->bindParam(":estado", $_GET["estado"], PDO::PARAM_INT);
 
     //echo $stmt->execute();

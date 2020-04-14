@@ -52,6 +52,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <th>Estatus</th>
                       <th>Max. Jug.</th>
                       <th>Fecha</th>
+                      <th>Estado</th>
                       <th>Acciones</th>
                     </tr>
                   </thead>
@@ -66,6 +67,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <th>Estatus</th>
                       <th>Max. Jug.</th>
                       <th>Fecha</th>
+                      <th>Estado</th>
                       <th>Acciones</th>
                     </tr>
                   </tfoot>
