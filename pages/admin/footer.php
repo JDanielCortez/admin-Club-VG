@@ -33,12 +33,8 @@
             "autoWidth": false,
         });
         $('#example2').DataTable({
-            "paging": false,
-            "lengthChange": false,
-            "searching": false,
             "ordering": false,
-            "info": false,
-            "autoWidth": true,
+            "autoWidth": false,
         });
 
         //Initialize Select2 Elements

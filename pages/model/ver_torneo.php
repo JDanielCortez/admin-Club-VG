@@ -2,30 +2,41 @@
 
 include_once "conexion.php";
 
-if ($_GET['action'] == 'create') {
+if ($_GET['action'] == 'create-premio') {
     //print_r($_POST);
 
-    $stmt = Conexion::conectar()->prepare("INSERT INTO torneos (id_juego, id_modalidad, id_estatus, titulo, fecha, hora, max_jugadores, descripcion) VALUES (:id_juego, :id_modalidad, :id_estatus, :titulo, :fecha, :hora, :max_jugadores, :descripcion)");
+    $stmt = Conexion::conectar()->prepare("INSERT INTO premios (id_torneo, lugar, nombre_premio) VALUES (:id_torneo, :lugar, :premio)");
 
-    $stmt->bindParam(":id_juego", $_POST['Juego'], PDO::PARAM_INT);
-    $stmt->bindParam(":id_modalidad", $_POST['Modalidad'], PDO::PARAM_INT);
-    $stmt->bindParam(":id_estatus", $_POST['Estatus'], PDO::PARAM_INT);
-    $stmt->bindParam(":titulo", $_POST['Titulo'], PDO::PARAM_STR);
-    $stmt->bindParam(":fecha", $_POST['Fecha'], PDO::PARAM_STR);
-    $stmt->bindParam(":hora", $_POST['Hora'], PDO::PARAM_STR);
-    $stmt->bindParam(":max_jugadores", $_POST['Jugadores'], PDO::PARAM_STR);
-    $stmt->bindParam(":descripcion", $_POST['Descripcion'], PDO::PARAM_STR);
+    $stmt->bindParam(":id_torneo", $_GET['torneo'], PDO::PARAM_INT);
+    $stmt->bindParam(":lugar", $_POST['Lugar'], PDO::PARAM_INT);
+    $stmt->bindParam(":premio", $_POST['Premio'], PDO::PARAM_STR);
 
     if ($stmt->execute()) {
-        $insertado = Conexion::conectar()->prepare("SELECT * FROM torneos_view ORDER BY id_torneo DESC LIMIT 1");
+        $insertado = Conexion::conectar()->prepare("SELECT * FROM premios ORDER BY id_premio DESC LIMIT 1");
         $insertado->execute();
         print_r(json_encode($insertado->fetch()));
     } else {
         print_r($stmt->fetch());
     }
+} elseif ($_GET['action'] == 'create-participante') {
+    //print_r($_POST);
+
+    // $stmt = Conexion::conectar()->prepare("INSERT INTO premios (id_torneo, lugar, nombre_premio) VALUES (:id_torneo, :lugar, :premio)");
+
+    // $stmt->bindParam(":id_torneo", $_GET['torneo'], PDO::PARAM_INT);
+    // $stmt->bindParam(":lugar", $_POST['Lugar'], PDO::PARAM_INT);
+    // $stmt->bindParam(":premio", $_POST['Premio'], PDO::PARAM_STR);
+
+    // if ($stmt->execute()) {
+    //     $insertado = Conexion::conectar()->prepare("SELECT * FROM premios ORDER BY id_premio DESC LIMIT 1");
+    //     $insertado->execute();
+    //     print_r(json_encode($insertado->fetch()));
+    // } else {
+    //     print_r($stmt->fetch());
+    // }
 } elseif ($_GET['action'] == 'read') {
     $stmt = Conexion::conectar()->prepare("SELECT * FROM torneos_view WHERE id_torneo = :id_torneo");
-    $stmt->bindParam(":id_torneo", $_GET['torneo'],PDO::PARAM_STR);
+    $stmt->bindParam(":id_torneo", $_GET['torneo'], PDO::PARAM_STR);
     $stmt->execute();
 
     print_r(json_encode($stmt->fetch()));
@@ -67,8 +78,14 @@ if ($_GET['action'] == 'create') {
     }
 } elseif ($_GET['action'] == 'premios') {
     $stmt = Conexion::conectar()->prepare("SELECT * FROM premios WHERE id_torneo= :id_torneo");
-    $stmt->bindParam(":id_torneo", $_GET['torneo'],PDO::PARAM_STR);
+    $stmt->bindParam(":id_torneo", $_GET['torneo'], PDO::PARAM_STR);
     $stmt->execute();
 
     print_r(json_encode($stmt->fetchAll()));
-} 
+} elseif ($_GET['action'] == 'participantes') {
+    $stmt = Conexion::conectar()->prepare("SELECT * FROM participantes WHERE id_torneo= :id_torneo");
+    $stmt->bindParam(":id_torneo", $_GET['torneo'], PDO::PARAM_STR);
+    $stmt->execute();
+
+    print_r(json_encode($stmt->fetchAll()));
+}
