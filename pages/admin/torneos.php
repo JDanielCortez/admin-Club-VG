@@ -35,10 +35,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <div class="col-md-10">
                     <h3>Listado</h3>
                   </div>
+                  <?php if($_SESSION['nivel'] == 'Admin'){?>
                   <div class="col-md-2">
                     <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#modal-lg"
                       onclick="prepararRegistro()"><span class="fas fa-plus"></span> Torneo</button>
                   </div>
+                  <?php }?>
                 </div>
               </div>
               <!-- /.card-header -->

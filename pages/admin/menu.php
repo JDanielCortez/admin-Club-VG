@@ -30,6 +30,7 @@
                         </p>
                     </a>
                 </li>
+                <?php if($_SESSION['nivel'] == 'Admin'){?>
                 <li class="nav-item">
                     <a href="gamers.php" class="nav-link" id="menu-gamers">
                         <i class="nav-icon fas fa-users"></i>
@@ -92,6 +93,7 @@
                         </li>
                     </ul>
                 </li>
+                <?php }?>
                 <li class="nav-item has-treeview" id="p-monedas">
                     <a href="#" class="nav-link" id="monedas">
                         <i class="nav-icon fas fa-coins"></i>
@@ -101,12 +103,14 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                    <?php if($_SESSION['nivel'] == 'Admin'){?>
                         <li class="nav-item">
                             <a href="monedas.php" class="nav-link" id="equivalencia">
                                 <i class="fas fa-equals"></i>
                                 <p>Equivalencias</p>
                             </a>
                         </li>
+                    <?php }?>
                         <li class="nav-item has-treeview">
                             <a href="cambios.php" class="nav-link" id="cambios">
                                 <i class="fas fa-exchange-alt"></i>
@@ -123,6 +127,7 @@
                         </p>
                     </a>
                 </li>
+                <?php if($_SESSION['nivel'] == 'Admin'){?>
                 <li class="nav-item">
                     <a href="renta.php" class="nav-link" id="menu-rentas">
                         <i class="nav-icon fas fa-dollar-sign"></i>
@@ -139,6 +144,7 @@
                         </p>
                     </a>
                 </li>
+                <?php }?>
                 <li class="nav-item">
                     <a href="mensajes.php" class="nav-link">
                         <i class="nav-icon fas fa-sms" id="p-menu-mensajes"></i>

@@ -80,6 +80,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
 
+                <?php if($_SESSION['nivel'] == 'Admin'){?>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card">
@@ -160,6 +161,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
                 <!-- /.row -->
+                <?php } ?>
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content -->

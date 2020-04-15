@@ -34,7 +34,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <div class="row">
                                     <div class="col-md-6">
                                         <h3>Listado</h3>
+                                        
                                     </div>
+                                    <?php if($_SESSION['nivel'] == 'Admin'){?>
                                     <div class="col-md-3">
                                         <button type="button" class="btn btn-block btn-primary" data-toggle="modal"
                                             data-target="#modal-lg" onclick="prepararRegistro()"><span
@@ -45,6 +47,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             data-target="#modal-lg" onclick="prepararCambio()"><span
                                                 class="fas fa-plus"></span> Cambiar monedas</button>
                                     </div>
+                                    <?php }?>
                                 </div>
                             </div>
                             <!-- /.card-header -->
